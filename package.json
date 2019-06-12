@@ -4,8 +4,7 @@
   "description": "na",
   "private": true,
   "scripts": {
-    "build": "gulp",
-    "start": "node server.js"
+    "start": "gulp"
   },
   "author": "@modsoussi",
   "license": "ISC",
@@ -30,6 +29,7 @@
     "webpack-cli": "^3.3.3",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-dev-server": "^3.7.1",
+    "webpack-manifest-plugin": "^2.0.4",
     "webpack-stream": "^5.2.1"
   }
 }

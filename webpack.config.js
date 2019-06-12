@@ -1,6 +1,4 @@
-const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -13,8 +11,7 @@ module.exports = {
     hot: true
   },
   plugins: [
-    // new CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    // new ManifestPlugin(),
   ],
   module: {
     rules: [
@@ -27,6 +24,7 @@ module.exports = {
       },
       {
         test: /\.js|.jsx$/,
+        exclude: /node_modules/,
         use: [
           'babel-loader',
           'react-hot-loader/webpack',

@@ -1,9 +1,11 @@
-const { parallel, src, dest } = require('gulp');
+const { src, dest } = require('gulp');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 const webpackDevServer = require('webpack-dev-server');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const config = require('../webpack.config');
 
@@ -21,6 +23,10 @@ function build() {
       template: path.resolve(__dirname, '..', 'src', 'index.html'),
       filename: 'assets/index.html',
     }),
+    new ManifestPlugin({
+      fileName: 'manifest.json',
+    }),
+    new CleanWebpackPlugin(),
   ]);
 
   return src(path.resolve(__dirname, '..', 'src', 'index.js'))
@@ -32,15 +38,26 @@ function devServer(callback) {
   let devConfig = Object.assign({}, config);
   devConfig.output = {
     filename: '[name].js',
-    publicPath: '/',
+    publicPath: 'http://localhost:3000/build/',
     libraryTarget: 'umd',
   }
+
+  devConfig.plugins = devConfig.plugins.concat([
+    new webpack.HotModuleReplacementPlugin(),
+    new ManifestPlugin({
+      fileName: 'devserver.manifest.json',
+    }),
+  ]);
 
   const options = {
     contentBase: path.resolve(__dirname, '..', 'dist'),
     hot: true,
     host: 'localhost',
-    port: 3000
+    port: 3000,
+    publicPath: devConfig.output.publicPath,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
   };
 
   webpackDevServer.addDevServerEntrypoints(devConfig, options);
@@ -48,10 +65,12 @@ function devServer(callback) {
   const server = new webpackDevServer(compiler, options);
 
   server.listen(3000, 'localhost', () => {
-    console.log('Webpack Dev Server listening on 3000 ...');
     callback();
   });
 }
 
-module.exports = parallel(devServer, build);
+module.exports = {
+  build,
+  devServer
+};
 

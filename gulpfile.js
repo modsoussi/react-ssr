@@ -1,6 +1,12 @@
 const gulp = require('gulp');
-const buildJS = require('./build/react');
+const { devServer, build }= require('./build/react');
 const serve = require('./build/express');
-const { parallel, series } = gulp;
+const { parallel, series, watch } = gulp;
 
-gulp.task('default', buildJS);
+gulp.task('default', series(parallel(build, devServer), serve));
+
+watch(['src/**/*.js'], (callback) => {
+  build();
+  serve();
+  callback();
+});
