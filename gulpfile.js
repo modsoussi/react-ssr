@@ -6,7 +6,6 @@ const { parallel, series, watch } = gulp;
 gulp.task('default', series(parallel(build, devServer), serve));
 
 watch(['src/**/*.js'], (callback) => {
-  build();
-  serve();
+  series(build, serve)();
   callback();
 });
