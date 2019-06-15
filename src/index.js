@@ -4,13 +4,10 @@ const App = require('./routes').default;
 const { BrowserRouter } = require('react-router-dom');
 
 if (typeof document !== 'undefined') {
-  const Client = () => (
+  hydrate(
     <BrowserRouter>
       <App />
-    </BrowserRouter>
-  )
-
-  hydrate(<Client />, document.getElementById('app-root'));
+    </BrowserRouter>, document.getElementById('app-root'));
 } else {
   module.exports = App;
 }
@@ -19,11 +16,10 @@ if (module.hot) {
   module.hot.accept('./routes', () => {
     console.log('Accepting Hello update');
     const NextApp = require('./routes').default;
-    const NextClient = () => (
+
+    render(
       <BrowserRouter>
         <NextApp />
-      </BrowserRouter>
-    )
-    render(<NextClient />, document.getElementById('app-root'));
+      </BrowserRouter>, document.getElementById('app-root'));
   });
 }

@@ -19,7 +19,6 @@ function server(port) {
       { location: req.url, context: context },
       React.createElement(component)
     );
-    console.log(app);
 
     const markup = renderToStaticMarkup(app);
 
