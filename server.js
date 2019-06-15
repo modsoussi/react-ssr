@@ -14,19 +14,13 @@ function server(port) {
     const component = require('./dist');
     const context = {};
 
-    const app = React.createElement(component);
-    console.log(app);
-
-    const appContainer = React.createElement(
+    const app = React.createElement(
       StaticRouter,
       { location: req.url, context: context },
-      app
+      React.createElement(component)
     );
-    
-    const markup2 = renderToStaticMarkup(app);
-    console.log(markup2);
 
-    const markup = renderToStaticMarkup(appContainer);
+    const markup = renderToStaticMarkup(app);
 
     fs.readFile('./dist/assets/index.html', 'utf-8', (err, html) => {
       if (err) {
