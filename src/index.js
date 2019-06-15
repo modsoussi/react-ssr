@@ -4,7 +4,7 @@ const App = require('./routes').default;
 const { BrowserRouter } = require('react-router-dom');
 
 if (typeof document !== 'undefined') {
-  const Client = (
+  const Client = () => (
     <BrowserRouter>
       <App />
     </BrowserRouter>
@@ -19,7 +19,7 @@ if (module.hot) {
   module.hot.accept('./routes', () => {
     console.log('Accepting Hello update');
     const NextApp = require('./routes').default;
-    const NextClient = (
+    const NextClient = () => (
       <BrowserRouter>
         <NextApp />
       </BrowserRouter>
