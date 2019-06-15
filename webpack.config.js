@@ -10,9 +10,7 @@ module.exports = {
     contentBase: './dist',
     hot: true
   },
-  plugins: [
-    // new ManifestPlugin(),
-  ],
+  plugins: [],
   module: {
     rules: [
       {

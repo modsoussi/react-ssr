@@ -1,17 +1,29 @@
 const React = require('react');
 const { hydrate, render } = require('react-dom');
-const Hello = require('./Hello').default;
+const App = require('./routes').default;
+const { BrowserRouter } = require('react-router-dom');
 
 if (typeof document !== 'undefined') {
-  hydrate(<Hello />, document.getElementById('app-root'));
+  const Client = (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  )
+
+  hydrate(<Client />, document.getElementById('app-root'));
 } else {
-  module.exports = Hello;
+  module.exports = App;
 }
 
 if (module.hot) {
-  module.hot.accept('./Hello', () => {
+  module.hot.accept('./routes', () => {
     console.log('Accepting Hello update');
-    const NextHello = require('./Hello').default;
-    render(<NextHello />, document.getElementById('app-root'));
+    const NextApp = require('./routes').default;
+    const NextClient = (
+      <BrowserRouter>
+        <NextApp />
+      </BrowserRouter>
+    )
+    render(<NextClient />, document.getElementById('app-root'));
   });
 }
