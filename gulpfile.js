@@ -17,3 +17,8 @@ watch(['src/**/*.js'], (callback) => {
   series(build, serve)();
   callback();
 });
+
+watch(['./server.js'], (callback) => {
+  serve();
+  callback();
+});

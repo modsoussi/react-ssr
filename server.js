@@ -1,6 +1,6 @@
 const fs = require('fs');
 const express = require('express');
-const { renderToStaticMarkup, renderToString } = require('react-dom/server');
+const { renderToStaticMarkup } = require('react-dom/server');
 const React = require('react');
 const color = require('ansi-colors');
 const { StaticRouter } = require('react-router-dom');
@@ -19,6 +19,7 @@ function server(port) {
       { location: req.url, context: context },
       React.createElement(component)
     );
+    console.log(app);
 
     const markup = renderToStaticMarkup(app);
 
