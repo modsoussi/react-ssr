@@ -1,7 +1,7 @@
 # React-SSR
 A server-side rendered React App using Gulp and Webpack
 
-## Usage Guide
+## Usage
 1. `git clone https://github.com/modsoussi/react-ssr.git`
 2. `cd react-ssr`
 3. `npm i`
