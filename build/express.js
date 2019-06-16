@@ -1,5 +1,6 @@
 const child_process = require('child_process');
 const path = require('path');
+const devPort = process.env.DEV_PORT || 3000;
 
 let child = null;
 function server(callback) {
@@ -8,7 +9,7 @@ function server(callback) {
   child = child_process.spawn(process.execPath, [path.resolve(__dirname, '..', 'server.js')], {
     env: {
       NODE_ENV: 'development',
-      DEV_PORT: 3000,
+      DEV_PORT: devPort,
     }
   });
   child.stdout.on('data', (data) => {

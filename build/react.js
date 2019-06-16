@@ -6,6 +6,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const devPort = process.env.DEV_PORT || 3000;
 
 const config = require('../webpack.config');
 
@@ -53,7 +54,7 @@ function devServer(callback) {
     contentBase: path.resolve(__dirname, '..', 'dist'),
     hot: true,
     host: 'localhost',
-    port: 3000,
+    port: devPort,
     publicPath: devConfig.output.publicPath,
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -64,7 +65,7 @@ function devServer(callback) {
   const compiler = webpack(devConfig);
   const server = new webpackDevServer(compiler, options);
 
-  server.listen(3000, 'localhost', () => {
+  server.listen(devPort, 'localhost', () => {
     callback();
   });
 }
