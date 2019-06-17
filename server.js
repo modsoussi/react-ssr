@@ -29,6 +29,7 @@ function server(port) {
       html = html.replace(/{react_markup}/, markup);
       if (process.env.NODE_ENV === 'development') {
         html = html.replace(/"\/index.js"/, `http://localhost:${process.env.DEV_PORT}/build/index.js`);
+        html = html.replace(/"\/index.css"/, `http://localhost:${process.env.DEV_PORT}/build/index.css`);
       }
 
       res.status(200).send(html);
