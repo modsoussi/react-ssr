@@ -1,7 +1,8 @@
-const ManifestPlugin = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const env = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+  mode: env,
   entry: {
     index: './src/index.js',
   },
@@ -10,14 +11,21 @@ module.exports = {
     contentBase: './dist',
     hot: true
   },
-  plugins: [],
+  plugins: [
+    new MiniCssExtractPlugin(),
+  ],
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
-          'isomorphic-style-loader',
-          'css-loader',
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: env === 'development',
+            },
+          },
+          { loader: 'css-loader', options: { importLoaders: 1 } },
           {
             loader: 'postcss-loader',
             options: {
