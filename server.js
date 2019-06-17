@@ -3,7 +3,6 @@ const express = require('express');
 const { renderToStaticMarkup } = require('react-dom/server');
 const React = require('react');
 const color = require('ansi-colors');
-const { StaticRouter } = require('react-router-dom');
 
 function server(port) {
   const app = express();
@@ -11,13 +10,13 @@ function server(port) {
   app.use(express.static('dist'));
 
   app.get('*', (req, res) => {
-    const component = require('./dist');
+    const { App, StaticRouter } = require('./dist');
     const context = {};
 
     const app = React.createElement(
       StaticRouter,
       { location: req.url, context: context },
-      React.createElement(component)
+      React.createElement(App)
     );
 
     const markup = renderToStaticMarkup(app);

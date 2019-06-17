@@ -1,7 +1,7 @@
 const React = require('react');
 const { hydrate, render } = require('react-dom');
 const App = require('./routes').default;
-const { BrowserRouter } = require('react-router-dom');
+const { BrowserRouter, StaticRouter } = require('react-router-dom');
 
 if (typeof document !== 'undefined') {
   hydrate(
@@ -9,7 +9,8 @@ if (typeof document !== 'undefined') {
       <App />
     </BrowserRouter>, document.getElementById('app-root'));
 } else {
-  module.exports = App;
+  // We export StaticRouter so server and client use the exact same singleton context instance
+  module.exports = { App, StaticRouter };
 }
 
 if (module.hot) {
