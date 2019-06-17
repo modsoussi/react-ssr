@@ -2,6 +2,7 @@ const React = require('react');
 const { hydrate, render } = require('react-dom');
 const App = require('./routes').default;
 const { BrowserRouter, StaticRouter } = require('react-router-dom');
+require('./main.css');
 
 if (typeof document !== 'undefined') {
   hydrate(

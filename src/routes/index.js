@@ -8,7 +8,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <nav>
+        <nav className="container">
           <ul>
             <li><Link to="/">Hello</Link></li>
             <li><Link to="/bye">Bye</Link></li>
