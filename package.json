@@ -4,7 +4,8 @@
   "description": "na",
   "private": true,
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "build": "NODE_ENV=production gulp"
   },
   "author": "@modsoussi",
   "license": "ISC",
