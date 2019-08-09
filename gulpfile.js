@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-const { devServer, build }= require('./build/react');
+const { devServer, serverBuild, clientBuild } = require('./build/react');
 const serve = require('./build/express');
 const { parallel, series, watch } = gulp;
 const env = process.env.NODE_ENV || 'development';
@@ -8,7 +8,7 @@ const color = require('ansi-colors');
 
 log('Envrionment:', color.bold.cyan(env));
 if (env === 'development') {
-  gulp.task('default', series(parallel(build, devServer), serve));
+  gulp.task('default', series(parallel(clientBuild, devServer), serve));
 } else {
   gulp.task('default', build);
 }

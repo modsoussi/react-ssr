@@ -1,8 +1,13 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Hello } from './Hello';
-import { Bye } from './Bye';
 import { Route, Link } from 'react-router-dom';
+import loadable from 'react-loadable';
+
+const AsyncBye = loadable({
+  loader: import('./Bye'),
+  loading: () => <div>Loading...</div>,
+})
 
 import './app.css';
 
@@ -18,7 +23,7 @@ class App extends React.Component {
         </nav>
 
         <Route path="/" exact component={Hello} />
-        <Route path="/bye" component={Bye} />
+        <Route path="/bye" component={AsyncBye} />
       </div>
     )
   }

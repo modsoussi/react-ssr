@@ -3,6 +3,11 @@ const express = require('express');
 const { renderToStaticMarkup } = require('react-dom/server');
 const React = require('react');
 const color = require('ansi-colors');
+const {
+  App,
+  StaticRouter,
+  Loadable
+} = require('./dist');
 
 function server(port) {
   const app = express();
@@ -10,13 +15,17 @@ function server(port) {
   app.use(express.static('dist'));
 
   app.get('*', (req, res) => {
-    const { App, StaticRouter } = require('./dist');
     const context = {};
+    const modules = []
 
     const app = React.createElement(
       StaticRouter,
       { location: req.url, context: context },
-      React.createElement(App)
+      React.createElement(
+        Loadable.Capture,
+        { report: (moduleName) => modules.push(moduleName)},
+        React.createElement(App),
+      ),
     );
 
     const markup = renderToStaticMarkup(app);
@@ -36,8 +45,10 @@ function server(port) {
     })
   });
 
-  app.listen(port, () => {
-    console.log(color.bold.green(`Ready on port ${port}`));
+  Loadable.preloadAll().then(()=> {
+    app.listen(port, () => {
+      console.log(color.bold.green(`Ready on port ${port}`));
+    });
   });
 }
 

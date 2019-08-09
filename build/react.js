@@ -10,16 +10,16 @@ const devPort = process.env.DEV_PORT || 3000;
 
 const config = require('../webpack.config');
 
-function build() {
-  let clientConfig = Object.assign({}, config);
-  clientConfig.output = {
-    filename: '[name].js',
+function serverBuild() {
+  let _config = Object.assign({}, config);
+  _config.output = {
+    filename: '[name].node.js',
     path: path.resolve(__dirname, '..', 'dist'),
     publicPath: '/',
     libraryTarget: 'umd',
     globalObject: 'this',
   }
-  clientConfig.plugins = clientConfig.plugins.concat([
+  _config.plugins = _config.plugins.concat([
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', 'src', 'index.html'),
       filename: 'assets/index.html',
@@ -31,19 +31,45 @@ function build() {
   ]);
 
   return src(path.resolve(__dirname, '..', 'src', 'index.js'))
-    .pipe(webpackStream(clientConfig))
-    .pipe(dest(clientConfig.output.path));
+    .pipe(webpackStream(_config))
+    .pipe(dest(_config.output.path));
+}
+
+function clientBuild() {
+  let _config = Object.assign({}, config);
+  _config.output = {
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
+    path: path.resolve(__dirname, '..', 'dist'),
+    publicPath: '/',
+    libraryTarget: 'umd',
+    globalObject: 'this',
+  }
+  _config.plugins = _config.plugins.concat([
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '..', 'src', 'index.html'),
+      filename: 'assets/index.html',
+    }),
+    new ManifestPlugin({
+      fileName: 'manifest.json',
+    }),
+    new CleanWebpackPlugin(),
+  ]);
+
+  return src(path.resolve(__dirname, '..', 'src', 'index.js'))
+    .pipe(webpackStream(_config))
+    .pipe(dest(_config.output.path));
 }
 
 function devServer(callback) {
-  let devConfig = Object.assign({}, config);
-  devConfig.output = {
+  let _config = Object.assign({}, config);
+  _config.output = {
     filename: '[name].js',
     publicPath: 'http://localhost:3000/build/',
     libraryTarget: 'umd',
   }
 
-  devConfig.plugins = devConfig.plugins.concat([
+  _config.plugins = _config.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
     new ManifestPlugin({
       fileName: 'devserver.manifest.json',
@@ -55,14 +81,14 @@ function devServer(callback) {
     hot: true,
     host: 'localhost',
     port: devPort,
-    publicPath: devConfig.output.publicPath,
+    publicPath: _config.output.publicPath,
     headers: {
       'Access-Control-Allow-Origin': '*',
     }
   };
 
-  webpackDevServer.addDevServerEntrypoints(devConfig, options);
-  const compiler = webpack(devConfig);
+  webpackDevServer.addDevServerEntrypoints(_config, options);
+  const compiler = webpack(_config);
   const server = new webpackDevServer(compiler, options);
 
   server.listen(devPort, 'localhost', () => {
@@ -71,7 +97,7 @@ function devServer(callback) {
 }
 
 module.exports = {
-  build,
+  clientBuild,
   devServer
 };
 

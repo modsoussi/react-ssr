@@ -1,5 +1,6 @@
 import React from 'react';
+import _ from 'lodash';
 
 export const Bye = () => (
-  <div>Good bye, World!</div>
+  <div>{_.join(['Good Bye', 'World!'], ', ')}</div>
 )
