@@ -8,6 +8,8 @@ const {
   StaticRouter,
   Loadable
 } = require('./dist');
+const { getBundles } = require('react-loadable/webpack');
+const manifest = require('./dist/react-loadable.json');
 
 function server(port) {
   const app = express();
@@ -29,6 +31,7 @@ function server(port) {
     );
 
     const markup = renderToStaticMarkup(app);
+    const bundles = getBundles(manifest, modules);
 
     fs.readFile('./dist/assets/index.html', 'utf-8', (err, html) => {
       if (err) {
@@ -41,6 +44,8 @@ function server(port) {
         html = html.replace(/"\/index.css"/, `http://localhost:${process.env.DEV_PORT}/build/index.css`);
       }
 
+      html = html.replace(/{loadable_scripts}/, bundles.map((bundle => `<script src="${bundle.file}"></script>`)).join('/n'));
+
       res.status(200).send(html);
     })
   });
@@ -49,7 +54,7 @@ function server(port) {
     app.listen(port, () => {
       console.log(color.bold.green(`Ready on port ${port}`));
     });
-  });
+  }).catch(err => console.error(err));
 }
 
 server(process.env.PORT || 5000);

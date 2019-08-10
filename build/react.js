@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const devPort = process.env.DEV_PORT || 3000;
+const { ReactLoadablePlugin } = require('react-loadable/webpack');
 
 const config = require('../webpack.config');
 
@@ -54,6 +55,9 @@ function clientBuild() {
       fileName: 'manifest.json',
     }),
     new CleanWebpackPlugin(),
+    new ReactLoadablePlugin({
+      filename: './dist/react-loadable.json',
+    }),
   ]);
 
   return src(path.resolve(__dirname, '..', 'src', 'index.js'))

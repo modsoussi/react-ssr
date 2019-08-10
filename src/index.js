@@ -14,7 +14,7 @@ if (typeof document !== 'undefined') {
   module.exports = { App, StaticRouter, Loadable };
 }
 
-if (module.hot) {
+/* if (module.hot) {
   module.hot.accept('./routes', () => {
     console.log('Accepting Hello update');
     const NextApp = require('./routes').default;
@@ -24,4 +24,4 @@ if (module.hot) {
         <NextApp />
       </BrowserRouter>, document.getElementById('app-root'));
   });
-}
+} */

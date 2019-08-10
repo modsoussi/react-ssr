@@ -16,10 +16,12 @@ module.exports = {
   ],
   optimization: {
     splitChunks: {
+      chunks: 'async',
       cacheGroups: {
         vendors: {
+          name: 'vendors',
           test: /node_modules/,
-          priority: -10
+          priority: 20
         },
         default: {
           minChunks: 2,
@@ -58,7 +60,7 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           'babel-loader',
-          'react-hot-loader/webpack',
+          // 'react-hot-loader/webpack',
         ]
       }
     ]

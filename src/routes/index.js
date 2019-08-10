@@ -1,11 +1,10 @@
 import React from 'react';
-import { hot } from 'react-hot-loader/root';
-import { Hello } from './Hello';
+import Hello from './Hello';
 import { Route, Link } from 'react-router-dom';
 import loadable from 'react-loadable';
 
 const AsyncBye = loadable({
-  loader: import('./Bye'),
+  loader: () => import('./Bye'),
   loading: () => <div>Loading...</div>,
 })
 
@@ -29,4 +28,4 @@ class App extends React.Component {
   }
 }
 
-export default hot(App);
+export default App;

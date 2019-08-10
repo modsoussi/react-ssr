@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
-export const Hello = () => (
+const Hello = () => (
   <div>{_.join(['Hello', 'World!'], ', ')}</div>
 )
+
+export default Hello;
