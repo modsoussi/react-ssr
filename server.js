@@ -6,8 +6,8 @@ const color = require('ansi-colors');
 const {
   App,
   StaticRouter,
-  Loadable
-} = require('./dist');
+} = require('./dist/index.node');
+const Loadable = require('react-loadable');
 const { getBundles } = require('react-loadable/webpack');
 const manifest = require('./dist/react-loadable.json');
 
@@ -18,7 +18,7 @@ function server(port) {
 
   app.get('*', (req, res) => {
     const context = {};
-    const modules = []
+    let modules = []
 
     const app = React.createElement(
       StaticRouter,
@@ -32,6 +32,7 @@ function server(port) {
 
     const markup = renderToStaticMarkup(app);
     const bundles = getBundles(manifest, modules);
+    console.log(modules, bundles);
 
     fs.readFile('./dist/assets/index.html', 'utf-8', (err, html) => {
       if (err) {
@@ -44,7 +45,7 @@ function server(port) {
         html = html.replace(/"\/index.css"/, `http://localhost:${process.env.DEV_PORT}/build/index.css`);
       }
 
-      html = html.replace(/{loadable_scripts}/, bundles.map((bundle => `<script src="${bundle.file}"></script>`)).join('/n'));
+      html = html.replace(/{loadable_scripts}/, bundles.map((bundle => `<script src="${bundle.publicPath}"></script>`)).join('/n'));
 
       res.status(200).send(html);
     })

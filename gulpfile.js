@@ -8,9 +8,9 @@ const color = require('ansi-colors');
 
 log('Envrionment:', color.bold.cyan(env));
 if (env === 'development') {
-  gulp.task('default', series(parallel(clientBuild, devServer), serve));
+  gulp.task('default', series(parallel(serverBuild, clientBuild, devServer), serve));
 } else {
-  gulp.task('default', build);
+  gulp.task('default', parallel(serverBuild, clientBuild));
 }
 
 watch(['src/**/*.js'], (callback) => {

@@ -19,19 +19,10 @@ function serverBuild() {
     filename: '[name].node.js',
     path: path.resolve(__dirname, '..', 'dist'),
     publicPath: '/',
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs2',
     globalObject: 'this',
   }
-  _config.plugins = _config.plugins.concat([
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '..', 'src', 'index.html'),
-      filename: 'assets/index.html',
-    }),
-    new ManifestPlugin({
-      fileName: 'manifest.json',
-    }),
-    new CleanWebpackPlugin(),
-  ]);
+  _config.target = 'node';
 
   return src(path.resolve(__dirname, '..', 'src', 'index.js'))
     .pipe(webpackStream(_config))
@@ -46,7 +37,6 @@ function clientBuild() {
     path: path.resolve(__dirname, '..', 'dist'),
     publicPath: '/',
     libraryTarget: 'umd',
-    globalObject: 'this',
   }
   _config.plugins = _config.plugins.concat([
     new HtmlWebpackPlugin({
@@ -56,10 +46,9 @@ function clientBuild() {
     new ManifestPlugin({
       fileName: 'manifest.json',
     }),
-    new CleanWebpackPlugin(),
-    new ReactLoadablePlugin({
-      filename: './dist/react-loadable.json',
-    }),
+    // new ReactLoadablePlugin({
+    //   filename: './dist/react-loadable.json',
+    // }),
     new BundleAnalyzerPlugin(),
     new BundleStatsWebpackPlugin(),
   ]);
@@ -80,8 +69,8 @@ function devServer(callback) {
 
   _config.plugins = _config.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
-    new ManifestPlugin({
-      fileName: 'devserver.manifest.json',
+    new ReactLoadablePlugin({
+      filename: './dist/react-loadable.json',
     }),
   ]);
 
@@ -107,6 +96,7 @@ function devServer(callback) {
 
 module.exports = {
   clientBuild,
+  serverBuild,
   devServer
 };
 
