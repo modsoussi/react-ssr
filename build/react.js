@@ -12,6 +12,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { BundleStatsWebpackPlugin } = require('bundle-stats');
 
 const config = require('../webpack.config');
+const env = process.env.NODE_ENV || 'development';
 
 function serverBuild() {
   let _config = Object.assign({}, config);
@@ -46,12 +47,15 @@ function clientBuild() {
     new ManifestPlugin({
       fileName: 'manifest.json',
     }),
-    // new ReactLoadablePlugin({
-    //   filename: './dist/react-loadable.json',
-    // }),
     new BundleAnalyzerPlugin(),
     new BundleStatsWebpackPlugin(),
   ]);
+
+  if (env !== 'development') {
+    _config.plugins.push(new ReactLoadablePlugin({
+      filename: './dist/react-loadable.json',
+    }));
+  }
 
   return src(path.resolve(__dirname, '..', 'src', 'index.js'))
     .pipe(webpackStream(_config))
@@ -69,10 +73,13 @@ function devServer(callback) {
 
   _config.plugins = _config.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
-    new ReactLoadablePlugin({
-      filename: './dist/react-loadable.json',
-    }),
   ]);
+
+  if (env === 'development') {
+    _config.plugins.push(new ReactLoadablePlugin({
+      filename: './dist/react-loadable.json',
+    }));
+  }
 
   const options = {
     contentBase: path.resolve(__dirname, '..', 'dist'),
