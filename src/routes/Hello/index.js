@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import join from 'lodash/join';
 
 const Hello = () => (
   <div>{_.join(['Hello', 'World!'], ', ')}</div>

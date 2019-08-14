@@ -8,6 +8,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const devPort = process.env.DEV_PORT || 3000;
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { BundleStatsWebpackPlugin } = require('bundle-stats');
 
 const config = require('../webpack.config');
 
@@ -58,6 +60,8 @@ function clientBuild() {
     new ReactLoadablePlugin({
       filename: './dist/react-loadable.json',
     }),
+    new BundleAnalyzerPlugin(),
+    new BundleStatsWebpackPlugin(),
   ]);
 
   return src(path.resolve(__dirname, '..', 'src', 'index.js'))
@@ -69,6 +73,7 @@ function devServer(callback) {
   let _config = Object.assign({}, config);
   _config.output = {
     filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
     publicPath: 'http://localhost:3000/build/',
     libraryTarget: 'umd',
   }
