@@ -32,7 +32,6 @@ function server(port) {
 
     const markup = renderToStaticMarkup(app);
     const bundles = getBundles(manifest, modules);
-    console.log(modules, bundles);
 
     fs.readFile('./dist/assets/index.html', 'utf-8', (err, html) => {
       if (err) {
