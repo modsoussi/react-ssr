@@ -49,7 +49,9 @@ function clientBuild() {
       fileName: 'manifest.json',
     }),
     new BundleAnalyzerPlugin(),
-    new BundleStatsWebpackPlugin(),
+    new BundleStatsWebpackPlugin({
+      outDir: '..',
+    }),
     new CleanWebpackPlugin(),
   ]);
 
