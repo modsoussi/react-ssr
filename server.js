@@ -12,6 +12,8 @@ const {
   StaticRouter,
 } = require('./dist/node/main.node');
 const manifest = require('./dist/react-loadable.json');
+const createStore = require('./dist/node/redux.node').default;
+const { Provider } = require('react-redux');
 
 function server(port) {
   const _app = express();
@@ -22,13 +24,19 @@ function server(port) {
     const context = {};
     const modules = [];
 
+    const store = createStore();
+
     const app = React.createElement(
-      StaticRouter,
-      { location: req.url, context },
+      Provider,
+      { store },
       React.createElement(
-        Loadable.Capture,
-        { report: (moduleName) => modules.push(moduleName) },
-        React.createElement(App),
+        StaticRouter,
+        { location: req.url, context },
+        React.createElement(
+          Loadable.Capture,
+          { report: (moduleName) => modules.push(moduleName) },
+          React.createElement(App),
+        ),
       ),
     );
 

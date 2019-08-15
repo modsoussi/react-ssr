@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { DefinePlugin } = require('webpack');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -14,6 +15,9 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin(),
+    new DefinePlugin({
+      __NODE_ENV__: JSON.stringify(env),
+    }),
   ],
   optimization: {
     splitChunks: {

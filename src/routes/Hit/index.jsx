@@ -1,27 +1,22 @@
 import React from 'react';
-
-// eslint-disable-next-line react/display-name
-export default class extends React.Component {
-  constructor(...args) {
-    super(...args);
-
-    this.state = {
-      hits: 0,
-    };
-  }
-
-  hit() {
-    this.setState((prev) => ({
-      hits: prev.hits + 1,
-    }));
-  }
-
+import { connect } from 'react-redux';
+import { newHit } from '../../redux/modules/hits';
+import { bindActionCreators } from 'redux';
+class Hits extends React.Component {
   render() {
     return (
       <div>
-        <button className="" onClick={this.hit.bind(this)}>Hit</button>
-        <p>{`${this.state.hits} hits`}</p>
+        <button className="" onClick={this.props.newHit}>Hit</button>
+        <p>{`${this.props.hits} hits`}</p>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  hits: state.hits.hits,
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ newHit }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Hits);

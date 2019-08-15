@@ -22,6 +22,10 @@ const PATHS = {
 
 function serverBuild() {
   const _config = { ...config };
+  _config.entry = {
+    main: './src/index.jsx',
+    redux: './src/redux/createStore.js'
+  }
   _config.output = {
     filename: '[name].node.js',
     path: path.resolve(__dirname, '..', 'dist', 'node'),
