@@ -20,7 +20,7 @@ export default class extends React.Component {
     return (
       <div>
         <button className="" onClick={this.hit.bind(this)}>Hit</button>
-        <p>{this.state.hits} hits</p>
+        <p>{`${this.state.hits} hits`}</p>
       </div>
     );
   }
