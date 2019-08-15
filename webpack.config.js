@@ -1,15 +1,16 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const env = process.env.NODE_ENV || 'development';
 
 module.exports = {
   mode: env,
   entry: {
-    index: './src/index.js',
+    main: './src/index.jsx',
   },
   devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist',
-    hot: true
+    hot: true,
   },
   plugins: [
     new MiniCssExtractPlugin(),
@@ -20,11 +21,11 @@ module.exports = {
       cacheGroups: {
         vendors: {
           name: 'vendors',
-          test: /node_modules/,
-          priority: -10
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10,
         },
-      }
-    }
+      },
+    },
   },
   module: {
     rules: [
@@ -43,21 +44,26 @@ module.exports = {
             options: {
               ident: 'postcss',
               plugins: [
+                // eslint-disable-next-line global-require
                 require('tailwindcss'),
+                // eslint-disable-next-line global-require
                 require('autoprefixer'),
-              ]
-            }
-          }
+              ],
+            },
+          },
         ],
       },
       {
-        test: /\.js|.jsx$/,
+        test: /\.js|\.jsx$/,
         exclude: /node_modules/,
         use: [
           'babel-loader',
           // 'react-hot-loader/webpack',
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
-}
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+};

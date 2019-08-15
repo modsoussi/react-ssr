@@ -1,45 +1,51 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { src, dest } = require('gulp');
+const glob = require('glob');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
-const webpackDevServer = require('webpack-dev-server');
+const WebpackDevServer = require('webpack-dev-server');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const devPort = process.env.DEV_PORT || 3000;
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { BundleStatsWebpackPlugin } = require('bundle-stats');
-
+const PurgecssPlugin = require('purgecss-webpack-plugin');
 const config = require('../webpack.config');
+
 const env = process.env.NODE_ENV || 'development';
+const devPort = process.env.DEV_PORT || 3000;
+const PATHS = {
+  src: path.resolve(__dirname, '..', 'src'),
+};
 
 function serverBuild() {
-  let _config = Object.assign({}, config);
+  const _config = { ...config };
   _config.output = {
     filename: '[name].node.js',
     path: path.resolve(__dirname, '..', 'dist', 'node'),
     publicPath: '/',
     libraryTarget: 'commonjs2',
     globalObject: 'this',
-  }
+  };
   _config.target = 'node';
   _config.plugins.push(new CleanWebpackPlugin());
 
-  return src(path.resolve(__dirname, '..', 'src', 'index.js'))
+  return src(path.resolve(__dirname, '..', 'src', 'index.jsx'))
     .pipe(webpackStream(_config))
     .pipe(dest(_config.output.path));
 }
 
 function clientBuild() {
-  let _config = Object.assign({}, config);
+  const _config = { ...config };
   _config.output = {
     filename: 'bundle.js',
     chunkFilename: '[name].chunk.js',
     path: path.resolve(__dirname, '..', 'dist', 'client'),
     publicPath: '/',
     libraryTarget: 'umd',
-  }
+  };
   _config.plugins = _config.plugins.concat([
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', 'src', 'index.html'),
@@ -55,27 +61,33 @@ function clientBuild() {
     new CleanWebpackPlugin(),
   ]);
 
+  if (env === 'production') {
+    _config.plugins.push(new PurgecssPlugin({
+      paths: glob.sync(`${PATHS.src}/*`, { nodir: true }),
+    }));
+  }
+
   if (env !== 'development') {
     _config.plugins.push(new ReactLoadablePlugin({
       filename: './dist/react-loadable.json',
     }));
   }
 
-  return src(path.resolve(__dirname, '..', 'src', 'index.js'))
+  return src(path.resolve(__dirname, '..', 'src', 'index.jsx'))
     .pipe(webpackStream(_config))
     .pipe(dest(_config.output.path));
 }
 
 function devServer(callback) {
-  let _config = Object.assign({}, config);
+  const _config = { ...config };
   _config.output = {
     filename: 'bundle.js',
     chunkFilename: '[name].chunk.js',
     publicPath: 'http://localhost:3000/build/',
     libraryTarget: 'umd',
-  }
+  };
 
-  _config.entry = ['react-hot-loader/patch', './src/'];
+  _config.entry = ['react-hot-loader/patch', './src/index.jsx'];
 
   _config.plugins = _config.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
@@ -95,12 +107,12 @@ function devServer(callback) {
     publicPath: _config.output.publicPath,
     headers: {
       'Access-Control-Allow-Origin': '*',
-    }
+    },
   };
 
-  webpackDevServer.addDevServerEntrypoints(_config, options);
+  WebpackDevServer.addDevServerEntrypoints(_config, options);
   const compiler = webpack(_config);
-  const server = new webpackDevServer(compiler, options);
+  const server = new WebpackDevServer(compiler, options);
 
   server.listen(devPort, 'localhost', () => {
     callback();
@@ -110,6 +122,5 @@ function devServer(callback) {
 module.exports = {
   clientBuild,
   serverBuild,
-  devServer
+  devServer,
 };
-

@@ -1,5 +1,7 @@
+// eslint-disable-next-line camelcase
 const child_process = require('child_process');
 const path = require('path');
+
 const devPort = process.env.DEV_PORT || 3000;
 
 let child = null;
@@ -10,7 +12,7 @@ function server(callback) {
     env: {
       NODE_ENV: 'development',
       DEV_PORT: devPort,
-    }
+    },
   });
   child.stdout.on('data', (data) => {
     console.log(data.toString().trim());
@@ -24,7 +26,7 @@ function server(callback) {
     }
   });
 
-  if(callback) callback();
+  if (callback) callback();
 }
 
 module.exports = server;
