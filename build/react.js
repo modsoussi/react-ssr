@@ -18,12 +18,13 @@ function serverBuild() {
   let _config = Object.assign({}, config);
   _config.output = {
     filename: '[name].node.js',
-    path: path.resolve(__dirname, '..', 'dist'),
+    path: path.resolve(__dirname, '..', 'dist', 'node'),
     publicPath: '/',
     libraryTarget: 'commonjs2',
     globalObject: 'this',
   }
   _config.target = 'node';
+  _config.plugins.push(new CleanWebpackPlugin());
 
   return src(path.resolve(__dirname, '..', 'src', 'index.js'))
     .pipe(webpackStream(_config))
@@ -33,9 +34,9 @@ function serverBuild() {
 function clientBuild() {
   let _config = Object.assign({}, config);
   _config.output = {
-    filename: '[name].js',
+    filename: 'bundle.js',
     chunkFilename: '[name].chunk.js',
-    path: path.resolve(__dirname, '..', 'dist'),
+    path: path.resolve(__dirname, '..', 'dist', 'client'),
     publicPath: '/',
     libraryTarget: 'umd',
   }
@@ -49,6 +50,7 @@ function clientBuild() {
     }),
     new BundleAnalyzerPlugin(),
     new BundleStatsWebpackPlugin(),
+    new CleanWebpackPlugin(),
   ]);
 
   if (env !== 'development') {
@@ -65,7 +67,7 @@ function clientBuild() {
 function devServer(callback) {
   let _config = Object.assign({}, config);
   _config.output = {
-    filename: '[name].js',
+    filename: 'bundle.js',
     chunkFilename: '[name].chunk.js',
     publicPath: 'http://localhost:3000/build/',
     libraryTarget: 'umd',
@@ -84,7 +86,7 @@ function devServer(callback) {
   }
 
   const options = {
-    contentBase: path.resolve(__dirname, '..', 'dist'),
+    contentBase: path.resolve(__dirname, '..', 'dist', 'client'),
     hot: true,
     host: 'localhost',
     port: devPort,
