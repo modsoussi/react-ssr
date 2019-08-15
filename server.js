@@ -40,8 +40,8 @@ function server(port) {
 
       html = html.replace(/{react_markup}/, markup);
       if (process.env.NODE_ENV === 'development') {
-        html = html.replace(/"\/index.js"/, `http://localhost:${process.env.DEV_PORT}/build/index.js`);
-        html = html.replace(/"\/index.css"/, `http://localhost:${process.env.DEV_PORT}/build/index.css`);
+        html = html.replace(/"\/index.js"/, `http://localhost:${process.env.DEV_PORT}/build/main.js`);
+        html = html.replace(/"\/index.css"/, `http://localhost:${process.env.DEV_PORT}/build/main.css`);
       }
 
       html = html.replace(/{loadable_scripts}/, bundles.map((bundle => `<script src="${bundle.publicPath}"></script>`)).join('/n'));

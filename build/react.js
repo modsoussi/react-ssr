@@ -71,6 +71,8 @@ function devServer(callback) {
     libraryTarget: 'umd',
   }
 
+  _config.entry = ['react-hot-loader/patch', './src/'];
+
   _config.plugins = _config.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
   ]);

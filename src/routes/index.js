@@ -2,6 +2,7 @@ import React from 'react';
 import Hello from './Hello';
 import { Route, Link } from 'react-router-dom';
 import loadable from 'react-loadable';
+import { hot } from 'react-hot-loader/root';
 
 const AsyncBye = loadable({
   loader: () => import('./Bye'),
@@ -28,4 +29,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default hot(App);
