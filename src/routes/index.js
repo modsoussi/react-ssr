@@ -1,13 +1,13 @@
 import React from 'react';
 import Hello from './Hello';
-import {Route, Link} from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import loadable from 'react-loadable';
-import {hot} from 'react-hot-loader/root';
+import { hot } from 'react-hot-loader/root';
 
 const AsyncBye = loadable({
   loader: () => import('./Bye'),
   loading: () => <div>Loading...</div>,
-});
+})
 
 const AsyncHit = loadable({
   loader: () => import('./Hit'),
@@ -32,7 +32,7 @@ class App extends React.Component {
         <Route path="/bye" component={AsyncBye} />
         <Route path="/hit" component={AsyncHit} />
       </div>
-    );
+    )
   }
 }
 

@@ -3,10 +3,12 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "google",
+    "airbnb",
   ],
   "plugins": [
     "react",
+    "react-hooks",
+    "import"
   ],
   "rules": {
     "require-jsdoc": 0,
