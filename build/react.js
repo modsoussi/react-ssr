@@ -48,7 +48,7 @@ function clientBuild() {
     new ManifestPlugin({
       fileName: 'manifest.json',
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     new BundleStatsWebpackPlugin({
       outDir: '..',
     }),

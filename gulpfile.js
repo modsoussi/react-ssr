@@ -16,7 +16,7 @@ if (env === 'development') {
 }
 
 watch(['src/**/*.js'], (callback) => {
-  series(clientBuild, serve)();
+  series(parallel(serverBuild, clientBuild), serve)();
   callback();
 });
 
