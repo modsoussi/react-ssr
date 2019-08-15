@@ -1,12 +1,13 @@
 import React from 'react';
 
+// eslint-disable-next-line react/display-name
 export default class extends React.Component {
   constructor(...args) {
     super(...args);
 
     this.state = {
       hits: 0,
-    }
+    };
   }
 
   hit() {
@@ -21,6 +22,6 @@ export default class extends React.Component {
         <button className="" onClick={this.hit.bind(this)}>Hit</button>
         <p>{this.state.hits} hits</p>
       </div>
-    )
+    );
   }
 }

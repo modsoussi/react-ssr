@@ -1,3 +1,15 @@
 {
-  "extends": "google",
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "google"
+  ],
+  "plugins": [
+    "react",
+  ],
+  "rules": {
+    "require-jsdoc": 0,
+    "display-name": 0,
+  }
 }
