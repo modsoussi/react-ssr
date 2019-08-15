@@ -3,6 +3,13 @@ const express = require('express');
 const { renderToStaticMarkup } = require('react-dom/server');
 const React = require('react');
 const color = require('ansi-colors');
+const {
+  App,
+  StaticRouter,
+} = require('./dist/index.node');
+const Loadable = require('react-loadable');
+const { getBundles } = require('react-loadable/webpack');
+const manifest = require('./dist/react-loadable.json');
 
 function server(port) {
   const app = express();
@@ -10,16 +17,21 @@ function server(port) {
   app.use(express.static('dist'));
 
   app.get('*', (req, res) => {
-    const { App, StaticRouter } = require('./dist');
     const context = {};
+    let modules = []
 
     const app = React.createElement(
       StaticRouter,
       { location: req.url, context: context },
-      React.createElement(App)
+      React.createElement(
+        Loadable.Capture,
+        { report: (moduleName) => modules.push(moduleName)},
+        React.createElement(App),
+      ),
     );
 
     const markup = renderToStaticMarkup(app);
+    const bundles = getBundles(manifest, modules);
 
     fs.readFile('./dist/assets/index.html', 'utf-8', (err, html) => {
       if (err) {
@@ -28,17 +40,21 @@ function server(port) {
 
       html = html.replace(/{react_markup}/, markup);
       if (process.env.NODE_ENV === 'development') {
-        html = html.replace(/"\/index.js"/, `http://localhost:${process.env.DEV_PORT}/build/index.js`);
-        html = html.replace(/"\/index.css"/, `http://localhost:${process.env.DEV_PORT}/build/index.css`);
+        html = html.replace(/"\/index.js"/, `http://localhost:${process.env.DEV_PORT}/build/main.js`);
+        html = html.replace(/"\/index.css"/, `http://localhost:${process.env.DEV_PORT}/build/main.css`);
       }
+
+      html = html.replace(/{loadable_scripts}/, bundles.map((bundle => `<script src="${bundle.publicPath}"></script>`)).join('/n'));
 
       res.status(200).send(html);
     })
   });
 
-  app.listen(port, () => {
-    console.log(color.bold.green(`Ready on port ${port}`));
-  });
+  Loadable.preloadAll().then(()=> {
+    app.listen(port, () => {
+      console.log(color.bold.green(`Ready on port ${port}`));
+    });
+  }).catch(err => console.error(err));
 }
 
 server(process.env.PORT || 5000);

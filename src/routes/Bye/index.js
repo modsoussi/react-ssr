@@ -1,5 +1,8 @@
 import React from 'react';
+import join from 'lodash/join';
 
-export const Bye = () => (
-  <div>Good bye, World!</div>
+const Bye = () => (
+  <div>{join(['Good Bye', 'World!'], ', ')}</div>
 )
+
+export default Bye;

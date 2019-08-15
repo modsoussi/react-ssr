@@ -14,6 +14,18 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin(),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      cacheGroups: {
+        vendors: {
+          name: 'vendors',
+          test: /node_modules/,
+          priority: -10
+        },
+      }
+    }
+  },
   module: {
     rules: [
       {
@@ -43,7 +55,7 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           'babel-loader',
-          'react-hot-loader/webpack',
+          // 'react-hot-loader/webpack',
         ]
       }
     ]
