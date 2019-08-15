@@ -8,7 +8,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const devPort = process.env.DEV_PORT || 3000;
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { BundleStatsWebpackPlugin } = require('bundle-stats');
 
 const config = require('../webpack.config');
