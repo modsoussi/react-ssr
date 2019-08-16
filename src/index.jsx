@@ -19,7 +19,9 @@ if (typeof document !== 'undefined') {
 } else {
   // We export StaticRouter so server and client use the exact same singleton context instance
   module.exports = {
-    App, StaticRouter, Loadable,
+    App,
+    StaticRouter,
+    Loadable,
   };
 }
 
