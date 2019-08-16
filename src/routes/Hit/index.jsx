@@ -7,7 +7,7 @@ import { newHit } from '../../redux/modules/hits';
 // eslint-disable-next-line no-shadow
 const Hits = ({ newHit, hits }) => (
   <div>
-    <button type="button" className="" onClick={newHit}>Hit</button>
+    <button type="button" className="bw-1" onClick={newHit}>Hit</button>
     <p>{`${hits} hits`}</p>
   </div>
 );

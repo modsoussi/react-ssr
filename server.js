@@ -11,7 +11,8 @@ const {
   App,
   StaticRouter,
   Loadable, // we export from bundle so that Loadable knows what
-  // to preload on the server post static render
+  // to preload on the server post static render, it internally keeps track
+  // of which components need to be initialized
 } = require('./dist/node/main.node');
 const manifest = require('./dist/react-loadable.json');
 const createStore = require('./dist/node/redux.node').default;
