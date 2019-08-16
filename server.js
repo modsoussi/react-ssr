@@ -10,13 +10,11 @@ const { Provider } = require('react-redux');
 const {
   App,
   StaticRouter,
-  Loadable,
+  Loadable, // we export from bundle so that Loadable knows what
+  // to preload on the server post static render
 } = require('./dist/node/main.node');
 const manifest = require('./dist/react-loadable.json');
 const createStore = require('./dist/node/redux.node').default;
-
-/* console.log(React === React2); // true, React2 is from react-redux
-console.log(ReactDOM === ReactDOM2); // true, ReactDOM2 is from react-redux */
 
 function server(port) {
   const _app = express();
