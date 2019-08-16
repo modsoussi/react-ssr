@@ -5,15 +5,18 @@ const { renderToStaticMarkup } = require('react-dom/server');
 const React = require('react');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const color = require('ansi-colors');
-const Loadable = require('react-loadable');
 const { getBundles } = require('react-loadable/webpack');
+const { Provider } = require('react-redux');
 const {
   App,
   StaticRouter,
+  Loadable,
 } = require('./dist/node/main.node');
 const manifest = require('./dist/react-loadable.json');
 const createStore = require('./dist/node/redux.node').default;
-const { Provider } = require('react-redux');
+
+/* console.log(React === React2); // true, React2 is from react-redux
+console.log(ReactDOM === ReactDOM2); // true, ReactDOM2 is from react-redux */
 
 function server(port) {
   const _app = express();

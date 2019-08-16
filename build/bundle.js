@@ -13,6 +13,7 @@ const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const { BundleStatsWebpackPlugin } = require('bundle-stats');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 const config = require('../webpack.config');
+const { parallel } = require('gulp');
 
 const env = process.env.NODE_ENV || 'development';
 const devPort = process.env.DEV_PORT || 3000;
@@ -124,7 +125,6 @@ function devServer(callback) {
 }
 
 module.exports = {
-  clientBuild,
-  serverBuild,
+  build: parallel(clientBuild, serverBuild),
   devServer,
 };
