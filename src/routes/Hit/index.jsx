@@ -14,7 +14,7 @@ const Hits = ({ newHit, hits }) => (
     >
       Hit
     </button>
-    <p className="ml-2">{`${hits} hits`}</p>
+    <p className="ml-2">{`${hits} hits babyyy`}</p>
   </div>
 );
 

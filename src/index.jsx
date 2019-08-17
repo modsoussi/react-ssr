@@ -1,6 +1,6 @@
 const React = require('react');
 const { hydrate, render } = require('react-dom');
-const { BrowserRouter, StaticRouter } = require('react-router-dom');
+const { BrowserRouter } = require('react-router-dom');
 const Loadable = require('react-loadable');
 const { Provider } = require('react-redux');
 const App = require('./routes').default;
@@ -17,13 +17,8 @@ if (typeof document !== 'undefined') {
     </Provider>, document.getElementById('app-root'),
   ));
 } else {
-  // We export StaticRouter, Loadable, and Provider so server and client use 
-  // the exact same singleton context instance
   module.exports = {
     App,
-    StaticRouter,
-    Loadable,
-    Provider,
   };
 }
 

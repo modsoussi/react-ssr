@@ -35,7 +35,6 @@ function serverBuild() {
     globalObject: 'this',
   };
   _config.target = 'node';
-  _config.plugins.push(new CleanWebpackPlugin());
 
   // if react is not external on the server, then it'll be bundled into main.node.js,
   // and then multiple versions of react will be used, one in the node bundle and one 
@@ -43,6 +42,9 @@ function serverBuild() {
   _config.externals = [
     'react',
     'react-dom',
+    'react-loadable',
+    'react-redux',
+    'react-router-dom',
   ];
 
   return src(path.resolve(__dirname, '..', 'src', 'index.jsx'))
@@ -71,7 +73,6 @@ function clientBuild() {
     new BundleStatsWebpackPlugin({
       outDir: '..',
     }),
-    new CleanWebpackPlugin(),
   ]);
 
   if (env === 'production') {

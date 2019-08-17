@@ -11,12 +11,10 @@ log('Envrionment:', color.bold.cyan(env));
 if (env === 'development') {
   gulp.task('default', series(parallel(build, devServer), serve));
 } else {
-  gulp.task('default', parallel(build, (cb) => {
-    cb();
-  }));
+  gulp.task('default', build);
 }
 
-watch(['src/**/*.js'], (callback) => {
+watch(['src/**/*.js', 'src/**/*.jsx'], (callback) => {
   series(build, serve)();
   callback();
 });
