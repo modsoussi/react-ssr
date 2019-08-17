@@ -25,7 +25,7 @@ export default function createStore(data) {
   const store = createFinalStore(reducer, data);
 
   // eslint-disable-next-line no-undef
-  if (__NODE_ENV__ === 'development' && module.hot) {
+  if (module.hot) {
     module.hot.accept('./modules/reducer', () => {
       // eslint-disable-next-line global-require
       store.replaceReducer(require('./modules/reducer').default);

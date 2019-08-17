@@ -36,6 +36,7 @@ function serverBuild() {
   };
   _config.target = 'node';
   _config.plugins.push(new CleanWebpackPlugin());
+  _config.externals = ['react'];
 
   return src(path.resolve(__dirname, '..', 'src', 'index.jsx'))
     .pipe(webpackStream(_config))

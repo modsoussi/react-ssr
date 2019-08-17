@@ -42,6 +42,8 @@ function server(port) {
       ),
     );
 
+    console.log(app);
+
     const markup = renderToStaticMarkup(app);
     const bundles = getBundles(manifest, modules);
 
