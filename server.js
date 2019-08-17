@@ -5,13 +5,18 @@ const { renderToStaticMarkup } = require('react-dom/server');
 const React = require('react');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const color = require('ansi-colors');
-const Loadable = require('react-loadable');
 const { getBundles } = require('react-loadable/webpack');
+// const { Provider } = require('react-redux');
 const {
   App,
   StaticRouter,
+  Loadable, // we export from bundle so that Loadable knows what
+  // to preload on the server post static render, it internally keeps track
+  // of which components need to be initialized
+  Provider,
 } = require('./dist/node/main.node');
 const manifest = require('./dist/react-loadable.json');
+const createStore = require('./dist/node/redux.node').default;
 
 function server(port) {
   const _app = express();
@@ -22,13 +27,19 @@ function server(port) {
     const context = {};
     const modules = [];
 
+    const store = createStore();
+
     const app = React.createElement(
-      StaticRouter,
-      { location: req.url, context },
+      Provider,
+      { store },
       React.createElement(
-        Loadable.Capture,
-        { report: (moduleName) => modules.push(moduleName) },
-        React.createElement(App),
+        StaticRouter,
+        { location: req.url, context },
+        React.createElement(
+          Loadable.Capture,
+          { report: (moduleName) => modules.push(moduleName) },
+          React.createElement(App),
+        ),
       ),
     );
 

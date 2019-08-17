@@ -1,27 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import propTypes from 'prop-types';
+import { newHit } from '../../redux/modules/hits';
 
-// eslint-disable-next-line react/display-name
-export default class extends React.Component {
-  constructor(...args) {
-    super(...args);
+// eslint-disable-next-line no-shadow
+const Hits = ({ newHit, hits }) => (
+  <div className="ml-2 flex flex-row items-center">
+    <button
+      className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+      type="button"
+      onClick={newHit}
+    >
+      Hit
+    </button>
+    <p className="ml-2">{`${hits} hits`}</p>
+  </div>
+);
 
-    this.state = {
-      hits: 0,
-    };
-  }
+const mapStateToProps = (state) => ({
+  hits: state.hits.hits,
+});
 
-  hit() {
-    this.setState((prev) => ({
-      hits: prev.hits + 1,
-    }));
-  }
+const mapDispatchToProps = (dispatch) => bindActionCreators({ newHit }, dispatch);
 
-  render() {
-    return (
-      <div>
-        <button className="" onClick={this.hit.bind(this)}>Hit</button>
-        <p>{`${this.state.hits} hits`}</p>
-      </div>
-    );
-  }
-}
+Hits.propTypes = {
+  hits: propTypes.number.isRequired,
+  newHit: propTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Hits);
