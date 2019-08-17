@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "gulp",
-    "build": "NODE_ENV=production gulp"
+    "build:production": "NODE_ENV=production gulp",
+    "clean": "rm -rf dist/*"
   },
   "author": "@modsoussi",
   "license": "ISC",

@@ -36,9 +36,9 @@ function serverBuild() {
   };
   _config.target = 'node';
 
-  // if react is not external on the server, then it'll be bundled into main.node.js,
-  // and then multiple versions of react will be used, one in the node bundle and one 
-  // from node_modules. Setting react as an externals avoids all that.
+  // if these packages are not external on the server, then they'll be bundled into main.node.js,
+  // and then different versions will be used, one from the main.node bundle and one 
+  // from node_modules. Setting them as externals avoids all that.
   _config.externals = [
     'react',
     'react-dom',
