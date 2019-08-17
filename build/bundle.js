@@ -31,12 +31,19 @@ function serverBuild() {
     filename: '[name].node.js',
     path: path.resolve(__dirname, '..', 'dist', 'node'),
     publicPath: '/',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
     globalObject: 'this',
   };
   _config.target = 'node';
   _config.plugins.push(new CleanWebpackPlugin());
-  _config.externals = ['react'];
+
+  // if react is not external on the server, then it'll be bundled into main.node.js,
+  // and then multiple versions of react will be used, one in the node bundle and one 
+  // from node_modules. Setting react as an externals avoids all that.
+  _config.externals = [
+    'react',
+    'react-dom',
+  ];
 
   return src(path.resolve(__dirname, '..', 'src', 'index.jsx'))
     .pipe(webpackStream(_config))

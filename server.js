@@ -6,13 +6,14 @@ const React = require('react');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const color = require('ansi-colors');
 const { getBundles } = require('react-loadable/webpack');
-const { Provider } = require('react-redux');
+// const { Provider } = require('react-redux');
 const {
   App,
   StaticRouter,
   Loadable, // we export from bundle so that Loadable knows what
   // to preload on the server post static render, it internally keeps track
   // of which components need to be initialized
+  Provider,
 } = require('./dist/node/main.node');
 const manifest = require('./dist/react-loadable.json');
 const createStore = require('./dist/node/redux.node').default;
@@ -41,8 +42,6 @@ function server(port) {
         ),
       ),
     );
-
-    console.log(app);
 
     const markup = renderToStaticMarkup(app);
     const bundles = getBundles(manifest, modules);

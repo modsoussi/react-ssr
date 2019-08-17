@@ -17,11 +17,13 @@ if (typeof document !== 'undefined') {
     </Provider>, document.getElementById('app-root'),
   ));
 } else {
-  // We export StaticRouter so server and client use the exact same singleton context instance
+  // We export StaticRouter, Loadable, and Provider so server and client use 
+  // the exact same singleton context instance
   module.exports = {
     App,
     StaticRouter,
     Loadable,
+    Provider,
   };
 }
 
