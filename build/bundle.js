@@ -18,7 +18,7 @@ const { parallel } = require('gulp');
 const env = process.env.NODE_ENV || 'development';
 const devPort = process.env.DEV_PORT || 3000;
 const PATHS = {
-  src: path.resolve(__dirname, '..', 'src'),
+  src: path.resolve(__dirname, '..', 'src', 'routes'),
 };
 
 function serverBuild() {
@@ -77,7 +77,7 @@ function clientBuild() {
 
   if (env === 'production') {
     _config.plugins.push(new PurgecssPlugin({
-      paths: glob.sync(`${PATHS.src}/*`, { nodir: true }),
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
     }));
   }
 
