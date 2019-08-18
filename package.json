@@ -6,6 +6,8 @@
   "scripts": {
     "start": "gulp",
     "build:production": "NODE_ENV=production gulp",
+    "run:production": "NODE_ENV=production node server.js",
+    "production": "npm-run-all build:production run:production",
     "clean": "rm -rf dist/*"
   },
   "author": "@modsoussi",
@@ -44,6 +46,7 @@
     "gulp": "^4.0.2",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.7.0",
+    "npm-run-all": "^4.1.5",
     "postcss-loader": "^3.0.0",
     "purgecss-webpack-plugin": "^1.5.0",
     "react-hot-loader": "^4.12.11",
