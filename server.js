@@ -18,7 +18,7 @@ const createStore = require('./dist/node/redux.node').default;
 function server(port) {
   const _app = express();
 
-  _app.use(express.static('dist'));
+  _app.use(express.static('dist/client'));
 
   _app.get('*', (req, res) => {
     const context = {};

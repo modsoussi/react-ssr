@@ -14,12 +14,14 @@ if (env === 'development') {
   gulp.task('default', build);
 }
 
-watch(['src/**/*.js', 'src/**/*.jsx'], (callback) => {
-  series(build, serve)();
-  callback();
-});
+if (env === 'development') {
+  watch(['src/**/*.js', 'src/**/*.jsx'], (callback) => {
+    series(build, serve)();
+    callback();
+  });
 
-watch(['./server.js'], (callback) => {
-  serve();
-  callback();
-});
+  watch(['./server.js'], (callback) => {
+    serve();
+    callback();
+  });
+}
