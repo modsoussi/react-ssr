@@ -5,10 +5,10 @@
   "private": true,
   "scripts": {
     "start": "gulp",
-    "build:production": "NODE_ENV=production gulp",
-    "serve:production": "NODE_ENV=production PORT=80 node server.js",
+    "build:production": "echo 'building...' && NODE_ENV=production gulp",
+    "serve:production": "echo 'serving...' && NODE_ENV=production PORT=80 node server.js",
     "production": "npm-run-all clean build:production serve:production",
-    "clean": "rm -rf dist"
+    "clean": "echo 'cleaning...' && rm -rf dist"
   },
   "author": "@modsoussi",
   "license": "ISC",
