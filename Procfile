@@ -1,1 +1,1 @@
-web: npm run production
+web: sudo npm run production
