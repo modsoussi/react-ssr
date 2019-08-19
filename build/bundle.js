@@ -80,7 +80,8 @@ function clientBuild() {
           extensions: ['js', 'jsx'],
           extractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
         },
-      ]
+      ],
+      whitelist: ['html', 'body']
     }));
   }
 
