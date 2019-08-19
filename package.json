@@ -43,12 +43,12 @@
     "react-hot-loader": "^4.12.11",
     "tailwindcss": "^1.1.0",
     "webpack": "^4.39.1",
-    "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-dev-server": "^3.7.2",
     "webpack-manifest-plugin": "^2.0.4",
-    "webpack-stream": "^5.2.1"
+    "webpack-stream": "^5.2.1",
+    "bundle-stats": "^1.4.1"
   },
   "devDependencies": {
     "eslint": "^6.1.0",
@@ -57,6 +57,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "bundle-stats": "^1.4.1"
+    "webpack-bundle-analyzer": "^3.4.1",
   }
 }

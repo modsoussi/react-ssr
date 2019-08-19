@@ -70,9 +70,6 @@ function clientBuild() {
       fileName: 'manifest.json',
     }),
     // new BundleAnalyzerPlugin(),
-    new BundleStatsWebpackPlugin({
-      outDir: '..',
-    }),
   ]);
 
   if (env === 'production') {
@@ -84,6 +81,9 @@ function clientBuild() {
   if (env !== 'development') {
     _config.plugins.push(new ReactLoadablePlugin({
       filename: './dist/react-loadable.json',
+    }),
+    new BundleStatsWebpackPlugin({
+      outDir: '..',
     }));
   }
 
