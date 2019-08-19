@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp",
     "build:production": "NODE_ENV=production gulp",
-    "serve:production": "NODE_ENV=production PORT=80 node server.js",
+    "serve:production": "NODE_ENV=production node server.js",
     "production": "npm-run-all clean build:production serve:production",
     "clean": "rm -rf dist"
   },
