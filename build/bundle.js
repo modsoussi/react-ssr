@@ -75,6 +75,12 @@ function clientBuild() {
   if (env === 'production') {
     _config.plugins.push(new PurgecssPlugin({
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+      extractors: [
+        {
+          extensions: ['js', 'jsx'],
+          extractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+        },
+      ]
     }));
   }
 
