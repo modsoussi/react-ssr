@@ -7,7 +7,10 @@ const App = require('./routes').default;
 const createStore = require('./redux/createStore').default;
 
 if (typeof document !== 'undefined') {
-  const store = createStore();
+  const data = window.__redux_data;
+  delete window.__redux_data;
+
+  const store = createStore(data);
 
   Loadable.preloadReady().then(() => hydrate(
     <Provider store={store}>

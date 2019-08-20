@@ -1,8 +1,10 @@
 import React from 'react';
 import join from 'lodash/join';
 
+import './hello.css';
+
 const Hello = () => (
-  <div>{join(['Hello', 'World!'], ', ')}</div>
+  <div className="classic ml-4">{join(['Hello', 'World!'], ', ')}</div>
 );
 
 export default Hello;
