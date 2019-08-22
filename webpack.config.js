@@ -62,7 +62,7 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           'babel-loader',
-          // 'react-hot-loader/webpack',
+          'react-hot-loader/webpack',
         ],
       },
     ],
