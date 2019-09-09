@@ -14,7 +14,8 @@
     "require-jsdoc": 0,
     "react/display-name": 0,
     "no-console": 0,
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "react/jsx-one-expression-per-line": 0
   },
   "env": {
     "node": true,
