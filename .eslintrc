@@ -3,7 +3,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "airbnb",
+    "airbnb"
   ],
   "plugins": [
     "react",
@@ -14,10 +14,10 @@
     "require-jsdoc": 0,
     "react/display-name": 0,
     "no-console": 0,
-    "no-underscore-dangle": 0,
+    "no-underscore-dangle": 0
   },
   "env": {
     "node": true,
-    "browser": true,
+    "browser": true
   }
 }
