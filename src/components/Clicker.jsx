@@ -13,7 +13,7 @@ const Head = () => {
   return (
     <div>
       <p>
-        You've clicked {count} times
+        You&apos;ve clicked {count} times
       </p>
       <button className="border rounded py-2 px-4 mt-2 ml-2 hover:bg-gray-100 hover:border-transparent" type="button" onClick={increment}>
         +
