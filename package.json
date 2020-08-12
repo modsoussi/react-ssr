@@ -42,7 +42,7 @@
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "serialize-javascript": "^1.8.0",
+    "serialize-javascript": "^4.0.0",
     "tailwindcss": "^1.1.0",
     "webpack": "^4.39.1",
     "webpack-bundle-analyzer": "^3.4.1",
